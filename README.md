@@ -28,4 +28,4 @@ student_performance_prediction.R: R script containing the code for data preproce
 studentInfo.csv: Dataset containing student information.
 README.md: This file providing an overview of the project and instructions for usage.
 Authors
-[Your Name]
+Krishna
