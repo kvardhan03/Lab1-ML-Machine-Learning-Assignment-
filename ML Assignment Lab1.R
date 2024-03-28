@@ -7,35 +7,35 @@ library(tidymodels)
 # Load janitor package
 library(janitor)
 
-# Read in the data
-students <- read_csv("studentInfo.csv")
+# Load the dataset
+my_data <- read_csv("studentInfo.csv")
 
-# Mutate variables
-students <- students %>%
+# Transform variables
+my_data <- my_data %>%
   mutate(pass = ifelse(final_result == "Pass", 1, 0)) %>%
   mutate(pass = as.factor(pass))
 
-students <- students %>%
+my_data <- my_data %>%
   mutate(disability = as.factor(disability))
 
-# Examine the data
-students
+# Inspect the dataset
+my_data
 
 # Feature engineering
-students <- students %>%
+my_data <- my_data %>%
   mutate(imd_band = factor(imd_band, levels = c("0-10%", "10-20%", "20-30%", "30-40%", "40-50%", "50-60%", "60-70%", "70-80%", "80-90%", "90-100%"))) %>%
   mutate(imd_band = as.integer(imd_band))
 
-# Split data
+# Data splitting
 set.seed(20230712)
-train_test_split <- initial_split(students, prop = 0.80)
+train_test_split <- initial_split(my_data, prop = 0.80)
 data_train <- training(train_test_split)
 data_test <- testing(train_test_split)
 
 # Create a recipe
 my_rec <- recipe(pass ~ disability + imd_band, data = data_train)
 
-# Specify the model
+# Model definition
 my_mod <- 
   logistic_reg() %>% 
   set_engine("glm") %>% 
